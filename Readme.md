@@ -33,6 +33,7 @@ To install it on ubuntu, follow steps provided in [here](https://beginners-guide
 To be able to fully implement all the settings from the given xmonad.hs, you will have to have some tools already installed in your system, like:
 
 - xdotool
+
 ```
 sudo apt-get update -y
 sudo apt-get install xdotool 
@@ -41,9 +42,18 @@ sudo apt-get install xdotool
 With Xmonad it is essential to have Xmobar. Xmobar is a bar like application where you can customize what updates/information you want to display.
 
 - xmobar
+
 ```
 sudo apt-get update -y
 sudo apt-get install xmobar
+```
+
+- lux(for controlling backlight)
+
+```bash
+$ git clone https://github.com/Ventto/lux.git
+$ cd lux
+$ sudo make install
 ```
 
 
