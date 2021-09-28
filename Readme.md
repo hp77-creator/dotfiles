@@ -48,7 +48,15 @@ sudo apt-get update -y
 sudo apt-get install xmobar
 ```
 
+- lxappearance(for changing GTK+ theme)
+```
+sudo apt-get update -y
+sudo apt-get install -y lxappearance
+```
+
+
 - lux(for controlling backlight)
+
 
 ```bash
 $ git clone https://github.com/Ventto/lux.git
