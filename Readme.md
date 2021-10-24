@@ -85,6 +85,16 @@ $ cd lux
 $ sudo make install
 ```
 
+:warning: Android Emulator will not work properly, add following lines to the config to make it work
+
+```haskell
+myManageHook = composeAll 
+[ ....
+, stringProperty "_NET_WM_NAME" =? "Emulator" --> doFloat
+]
+```
+[source of this info](https://abhixec.com/posts/xmonadandandroidstudio.html)
+
 ### Links
 
 Some helpful links that got me through the config of my system, you can explore these and have something of your own. 
