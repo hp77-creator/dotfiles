@@ -2,21 +2,22 @@ Dotfiles that I use for my system.
 
 <details>
 <summary><strong>Backstory</strong></summary>
-I got infatuated with vim and type of speed that it granted me and also the independence from the keyboard in the process.
-But except in editor, I couldn't use my keyboard shortcuts that I learnt via Vim, I wanted to change that.
-I looked for it on internet and came across the beautiful community of [unixporn](www.reddit.com/r/unixporn), where different Linux users from across the globe share their desktop customizations and from there I got to know of [DistroTube(DT)](https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg), this guy had a lot of videos on window manager and configs and what not.
-I looked different windows manager but only xmonad caught my eye because of its simplicity and Vim like keybindings and the rest is the history :laughing: . 
+I fell in love with Vim and type of speed that it provides me and also the independence from the mouse in the process.
+But all of these were limited to just my editor or when I was writing code. I wanted a system where Vim like keybindings are everywhere. I dig up internet for that and came across the beautiful community of [Unixporn](www.reddit.com/r/unixporn), where different Linux users from across globe share their desktop customizations and from there I got to know of [DistroTube(DT)](https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg), this guy has a lot of videos on window manager and configs and what not.
+I looked functionalities of different windows manager but only Xmonad caught my eye because of its simplicity and Vim like keybindings and Here I am. :laughing: . 
 </details>
 
 
-To enable these dotfiles for your system, you will have to either copy them inside your `.config` directory(for xmobar)
+To use these dotfiles for your system, you will have:
+- copy `xmobar` inside your `.config` directory(for xmobar) 
+- copy `xmonad` in your `~` under directory name `.xmonad`
 
 or copy them inside your home directory. Below is the detailed procedure for each application.
 
 ### Bash
 
 ![Bash](images/bash.png)
-I use bash for my system because it is the default and I was not looking for any hi-fi customization for my shell. To implement customization for your shell and if your shell is also Bash. You can simply copy the content of this repo's `.bashrc` into your `.bashrc`.
+I use bash for my system because it is the default and I was not looking for any hi-fi customization for my shell. To implement customization for your shell and if your shell is also Bash. You can simply copy the content of this repo's `bashrc` into your `.bashrc`.
 
 ### Vim
 
@@ -26,7 +27,7 @@ My goto editor is Vim, so I have some customization for vim as well, to implemen
 
 If your system does not have vim by default, then first install it.
 
-Command to install vim is:
+Command to install Vim in system with `apt` package manager is:
 ```
 sudo apt update
 sudo apt install vim
@@ -53,14 +54,17 @@ To be able to fully implement all the settings from the given xmonad.hs, you wil
 
 - xdotool
 
+This pkg lets you use your mouse on xmobar and make it clickable.
+
 ```
 sudo apt-get update -y
 sudo apt-get install xdotool 
 ```
 
-With Xmonad it is essential to have Xmobar. Xmobar is a bar like application where you can customize what updates/information you want to display.
 
 - xmobar
+
+With Xmonad it is essential to have Xmobar. Xmobar is a bar like application where you can customize what updates/information you want to display.
 
 ![](images/xmobar.png)
 
