@@ -7,6 +7,7 @@
 -- Normally, you'd only override those defaults you care about.
 --IMPORTS
 {-# OPTIONS_GHC -Wno-deprecations #-}
+{-# LANGUAGE TupleSections #-}
 import Graphics.X11.ExtraTypes ()
 import Graphics.X11.ExtraTypes.XF86
 import System.Exit ( exitWith, ExitCode(ExitSuccess), exitSuccess )
@@ -23,6 +24,7 @@ import XMonad
       xK_9,
       xK_Return,
       xK_Tab,
+      xK_b,
       xK_c,
       xK_comma,
       xK_e,
@@ -41,6 +43,11 @@ import XMonad
       xK_t,
       xK_w,
       xK_F4,
+      xK_F7,
+      xK_Left,
+      xK_Up,
+      xK_Right,
+      xK_Down,
       io,
       spawn,
       whenJust,
@@ -61,6 +68,7 @@ import XMonad
       screenWorkspace,
       sendMessage,
       setLayout,
+      stringProperty,
       windows,
       withFocused,
       Default(def),
@@ -75,10 +83,13 @@ import XMonad
       IncMasterN(IncMasterN),
       Mirror(Mirror),
       Resize(Expand, Shrink),
-      Tall(Tall), doShift, gets, XState (windowset), xK_Print )
+      Tall(Tall), doShift, gets, XState (windowset), xK_Print, (<+>), doF )
 --Actions
-import XMonad.Actions.CycleWS ()
-import XMonad.Actions.SpawnOn ()
+--Actions
+--Actions
+--Actions
+import XMonad.Actions.CycleWS (nextWS, prevWS)
+import XMonad.Actions.SpawnOn (manageSpawn)
 --Hooks
 import XMonad.Hooks.DynamicLog
     ( dynamicLogWithPP,
@@ -90,34 +101,38 @@ import XMonad.Hooks.FadeInactive ( fadeInactiveLogHook )
 import XMonad.Hooks.ManageHelpers ()
 import XMonad.Hooks.Place ()
 import XMonad.Hooks.SetWMName (setWMName)
-import XMonad.Hooks.ManageDocks ( docks, avoidStruts )
+import XMonad.Hooks.ManageDocks ( docks, avoidStruts, ToggleStruts (ToggleStruts) )
 --Layouts
 import XMonad.Layout.Fullscreen ()
 import XMonad.Layout.IndependentScreens ()
+import XMonad.Layout.ResizableTile( ResizableTall(..)
+                                    , MirrorResize(MirrorShrink, MirrorExpand) )
 import XMonad.Layout.Spacing ()
 --Utils
 import XMonad.Util.SpawnOnce (spawnOnOnce)
 import XMonad.Util.Run (spawnPipe)
-import XMonad.Wallpaper ()
+-- import XMonad.Wallpaper ()
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
 import Data.Monoid ()
 import XMonad.Prompt.XMonad ( xmonadPromptC )
 import XMonad.Operations (restart)
 import XMonad.Prompt (defaultXPConfig)
+import Distribution.Simple.Setup (programConfigurationOptions)
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
 myTerminal :: String
-myTerminal = "Alacritty"
+myTerminal = "gnome-terminal"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
-myFocusFollowsMouse = True
+myFocusFollowsMouse = False
 
 -- Whether clicking on a window to focus also passes the click to the window
 myClickJustFocuses :: Bool
-myClickJustFocuses = False
+myClickJustFocuses = True
+
 
 -- Width of the window border in pixels.
 --
@@ -185,6 +200,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 -- Border colors for unfocused and focused windows, respectively.
 --
 --
+
 myNormalBorderColor :: String
 myNormalBorderColor  = "#292d3e"
 
@@ -218,6 +234,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    
+    -- google chrome
+    , ((modm,               xK_F7    ), spawn "google-chrome")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -237,11 +256,9 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     , ((modm,               xK_Tab   ), windows W.focusDown)
     --Volume Controls
     , ((0, xF86XK_AudioMute), spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
-    , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -10%")
-    , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +10%")
-    --Brightness Control
-    , ((0, xF86XK_MonBrightnessUp), spawn "lux -a 10%")
-    , ((0, xF86XK_MonBrightnessDown), spawn "lux -s 10%")
+    , ((0, xF86XK_AudioLowerVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ -5%")
+    , ((0, xF86XK_AudioRaiseVolume), spawn "pactl set-sink-volume @DEFAULT_SINK@ +5%")
+
 
     -- Move focus to the next window
     , ((modm,               xK_j     ), windows W.focusDown)
@@ -263,6 +280,11 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
 
     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
+    --Resize windows height
+    , ((modm,               xK_Left),   sendMessage MirrorExpand)
+    , ((modm,               xK_Up),     sendMessage MirrorExpand)
+    , ((modm,               xK_Right),  sendMessage MirrorShrink)
+    , ((modm,               xK_Down),   sendMessage MirrorShrink)
 
     -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
@@ -276,11 +298,16 @@ myKeys conf@XConfig {XMonad.modMask = modm} = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
 
+    --Switch to next workspace using arrow keys
+    , ((modm              , xK_Right), nextWS)
+
+    , ((modm             , xK_Left), prevWS)
+
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
     --
-    -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
 
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io exitSuccess)
@@ -373,13 +400,17 @@ myLayout = avoidStruts (tiled ||| Mirror tiled ||| Full)
 myManageHook :: ManageHook
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
-    , className =? "vlc"            --> doShift(  myWorkspaces !! 5) -- 'fun'
-    , className =? "kitty"          --> doShift(  myWorkspaces !! 3) -- 'sh'
-    , className =? "Spotify"        --> doShift(  myWorkspaces !! 5) -- 'fun'
-    , className =? "Visual Studio Code" --> doShift (myWorkspaces !! 2) -- code
+    , className =? "gnome-terminal-server"          --> doF (W.shift "sh") -- 'sh'
+    , className =? "Spotify"        --> doF (W.shift "fun") -- 'fun'
+    , className =? "code" --> doF (W.shift "code") -- code
     , className =? "Gimp"           --> doFloat
+    , stringProperty "_NET_WM_NAME" =? "Emulator" --> doFloat
     , resource  =? "desktop_window" --> doIgnore
+    , resource =? "brave-browser" --> doF (W.shift "web") --web
     , resource  =? "kdesktop"       --> doIgnore ]
+
+
+newManageHook = myManageHook <+> manageHook def
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -453,7 +484,7 @@ defaults = def {
 
       -- hooks, layouts
         layoutHook         = myLayout,
-        manageHook         = myManageHook,
+        manageHook         = newManageHook,
         handleEventHook    = myEventHook,
         startupHook        = myStartupHook
     }

@@ -1,4 +1,5 @@
-Config { font = "xft:Hack:size=11:Bold:antialias=true,Hack Nerd Font:size=12:Bold:antialias=true"
+Config { 
+        font = "xft:Hack:size=11:Bold:antialias=true,Hack Nerd Font:size=12:Bold:antialias=true"
        , additionalFonts = []
        , borderColor = "#373b41"
        , border = TopB
@@ -15,7 +16,7 @@ Config { font = "xft:Hack:size=11:Bold:antialias=true,Hack Nerd Font:size=12:Bol
        , iconRoot = "~/.config/xmobar/xpm-status-icons"
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Weather "VABB" ["-t","Temp : <tempC>°C",
+       , commands = [ Run Weather "VABB" ["-t","T : <tempC>°C",
                                           "-L","18","-H","25",
                                           "--normal","green",
                                           "--high","red",
@@ -41,10 +42,11 @@ Config { font = "xft:Hack:size=11:Bold:antialias=true,Hack Nerd Font:size=12:Bol
                              , "--normal"   , "orange"
                              , "--high"     , "red"
                              ] 10
+                    , Run Com "/home/hp77/.config/xmobar/scripts/battery" [] "battery" 10
                     , Run Cpu ["-L","3","-H","50",
-                               "--normal","green","--high","red"] 10
-                    , Run Memory ["-t","M : <usedratio>%"] 10
-                    , Run Swap [] 10
+                               "--normal","green","--high","red" ] 9 
+                    , Run Memory ["-t","M:<usedratio>%"] 10
+                    , Run Swap ["-t", "S:<usedratio>%"] 10
                     , Run UnsafeStdinReader
                     , Run Com "whoami" [] "username" 10
                     -- I removed year which was %Y and also second which was %S
@@ -55,5 +57,6 @@ Config { font = "xft:Hack:size=11:Bold:antialias=true,Hack Nerd Font:size=12:Bol
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "<fc=#ff6ac1>%UnsafeStdinReader%</fc> }<fc=#ee9a00>%date%</fc>{ <fc=#1de9b6><fc=#ff6ac1>%cpu%</fc> | <fc=#8e24aa>%coretemp%</fc> | <fc=#f1fa8c>%memory% - %swap%</fc> | <fc=#57c7ff>%dynnetwork%</fc> | <fc=#57c7ff>%VABB%</fc> | <fc=#ff0000>%username%</fc></fc>"
+       , template = "<fc=#ff6ac1>%UnsafeStdinReader%</fc> }<fc=#ee9a00>%date%</fc>{ <fc=#1de9b6><fc=#ff6ac1>%cpu%</fc> | <fc=#f1fa8c>%memory%-%swap%</fc> | <fc=#57c7ff>%dynnetwork%</fc> | <fc=#57c7ff>%VABB%</fc> | <fc=#5af78e>%battery%</fc> | <fc=#ff0000>%username%</fc></fc>"
+
       } 
