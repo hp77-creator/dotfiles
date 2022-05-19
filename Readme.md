@@ -97,6 +97,32 @@ myManageHook = composeAll
 , stringProperty "_NET_WM_NAME" =? "Emulator" --> doFloat
 ]
 ```
+
+
+- Script for getting battery low notification
+
+I created a `cronjob` for the same following this [link](https://hep.uchicago.edu/~tlatorre/power_warning.html). I have also added the script inside `xmonad` directory in case you don't want to copy paste from the website
+You will have to also install `xosd-bin` it is a tool which helps to display messages on screen in X-Display.
+
+```bash
+sudo apt update
+sudo apt install xosd-bin
+```
+
+
+- Step to create the `cronjob` is:
+
+```bash
+> crontab -e
+```
+
+```bash
+DISPLAY=0.0
+PATH=/usr/bin
+
+* * * * * python3 ~/.xmonad/power.py
+```
+
 [source of this info](https://abhixec.com/posts/xmonadandandroidstudio.html)
 
 ### Links
