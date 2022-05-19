@@ -4,6 +4,7 @@
 set -o vi
 alias terminal='gnome-terminal'
 alias matlab='sudo /usr/local/MATLAB/R2018b/bin/matlab'
+alias fdm='/opt/freedownloadmanager/fdm'
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
