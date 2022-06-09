@@ -2,8 +2,10 @@ Dotfiles that I use for my system.
 
 <details>
 <summary><strong>Backstory</strong></summary>
-I fell in love with Vim and type of speed that it provides me and also the independence from the mouse in the process.
-But all of these were limited to just my editor or when I was writing code. I wanted a system where Vim like keybindings are everywhere. I dig up internet for that and came across the beautiful community of [Unixporn](www.reddit.com/r/unixporn), where different Linux users from across globe share their desktop customizations and from there I got to know of [DistroTube(DT)](https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg), this guy has a lot of videos on window manager and configs and what not.
+I fell in love with Vim and type of speed that it provides me and also the independence from the mouse.
+But the benefit was limited to only editor or when I was writing code.
+I wanted a system where Vim like keybindings are everywhere.
+I dig up internet to look for solutions which will make me use vim-like keybindings everywhere and came across the beautiful community of [Unixporn](www.reddit.com/r/unixporn), where different Linux users from around globe share their desktop customizations(known as rice) and from there I got to know of [DistroTube(DT)](https://www.youtube.com/channel/UCVls1GmFKf6WlTraIb_IaJg), this guy has a lot of videos on window manager and configs and what not.
 I looked functionalities of different windows manager but only Xmonad caught my eye because of its simplicity and Vim like keybindings and Here I am. :laughing: . 
 </details>
 
@@ -36,6 +38,9 @@ sudo apt install vim
 
 ### Xmonad
 
+![xmonad with icons in xmobar](images/xmonad-icon.jpeg)
+
+
 ![xmonad in Mirror Tall config](images/xmonad.png)
 xmonad in Mirror Tall mode
 
@@ -67,6 +72,7 @@ sudo apt-get install xdotool
 With Xmonad it is essential to have Xmobar. Xmobar is a bar like application where you can customize what updates/information you want to display.
 
 ![](images/xmobar.png)
+![xmobar-with-icons](images/xmobar-icon.jpeg)
 
 ```
 sudo apt-get update -y

@@ -1,0 +1,62 @@
+Config { 
+        font = "xft:Hack Nerd Font:size=9:Bold:antialias=true, FontAwesome:size=9" --"xft:SFN display:size=10,FontAwesome:size=7" 
+       , additionalFonts = []
+       , borderColor = "#373b41"
+       , border = TopB
+       , bgColor = "#282a36"
+       , fgColor = "f8f8f2"
+       , alpha = 255
+       , position = Top
+       , textOffset = -1
+       , iconOffset = -1
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = False
+       , hideOnStart = False
+       , iconRoot = "~/.config/xmobar/xpm-status-icons"
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run Weather "VABB" ["-t"," <tempC>°C",
+                                          "-L","18","-H","25",
+                                          "--normal","green",
+                                          "--high","red",
+                                          "--low","lightblue"] 36000
+                
+                    , Run Network "eth0" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    , Run Network "eth1" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    -- For Network Speed
+                    ,Run DynNetwork     [ "--template" , "<rx> kB/s"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "red"
+                             , "--normal"   , "orange"
+                             , "--high"     , "green"
+                             ] 10
+                    -- For CPU Temp
+                    ,Run CoreTemp       [ "--template" , "<core0>°C"
+                             , "--Low"      , "70"        -- units: °C
+                             , "--High"     , "80"        -- units: °C
+                             , "--low"      , "green"
+                             , "--normal"   , "orange"
+                             , "--high"     , "red"
+                             ] 10
+                    , Run Com "/home/hp77/.config/xmobar/scripts/battery" [] "battery" 10
+                    , Run Cpu ["-L","3","-H","50",
+                               "--normal","green","--high","red" ] 9 
+                    , Run Memory ["-t","<usedratio>%"] 10
+                    , Run Swap ["-t", "<usedratio>%"] 10
+                    , Run UnsafeStdinReader
+                    , Run Com "whoami" [] "username" 10
+                    -- I removed year which was %Y and also second which was %S
+                    , Run Date "%a %b/%d %H:%M" "date" 10
+                   --Gives out Name of the internet, Not using now 
+                    , Run Com "/home/hp77/.config/xmobar/scripts/internet" []
+                        "internet" 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<fc=#ff6ac1>%UnsafeStdinReader%</fc> }<fc=#ee9a00> %date%</fc>{ <fc=#1de9b6><fc=#ff6ac1> %cpu%</fc> | <fc=#f1fa8c> %memory% %swap%</fc> | <fc=#57c7ff>  %dynnetwork%</fc> | <fc=#57c7ff> %VABB%</fc> | <fc=#5af78e> %battery%</fc> | <fc=#ff0000>%username%</fc></fc>"
+
+      } 
