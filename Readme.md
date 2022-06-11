@@ -80,10 +80,17 @@ sudo apt-get install xmobar
 ```
 
 - lxappearance(for changing GTK+ theme)
+
 ```
 sudo apt-get update -y
 sudo apt-get install -y lxappearance
 ```
+
+- picom(for aesthetic look and effect)
+
+    [link](https://github.com/yshui/picom) for instruction on how to install picom and a configuration file is provided in [here](picom/picom.conf).
+
+![Example](images/picomm.jpeg)
 
 
 - lux(for controlling backlight)
