@@ -1,0 +1,87 @@
+Config { 
+        font = "xft:Hack Nerd Font:size=9:Bold:antialias=true, FontAwesome:size=9" --"xft:SFN display:size=10,FontAwesome:size=7" 
+       , additionalFonts = []
+       , borderColor = "#373b41"
+       , border = TopB
+       , bgColor = "#282a36"
+       , fgColor = "f8f8f2"
+       , alpha = 255
+       -- Position TopSize and BottomSize take 3 arguments:
+       --   an alignment parameter (L/R/C) for Left, Right or Center.
+       --   an integer for the percentage width, so 100 would be 100%.
+       --   an integer for the minimum pixel height for xmobar, so 24 would force a height of at least 24 pixels.
+       --   NOTE: The height should be the same as the trayer (system tray) height.
+      
+       --, position = TopSize C 97 24 
+       -- customized xpos and ypos to bring xmobar in center and floating, wish there was an offset kind of option
+       , position = Static {xpos = 8, ypos = 8, width = 400, height = 30} -- customized xpos and ypos to bring xmobar in center and floating, wish there was an offset kind of option
+       , textOffset = -1 
+       , iconOffset = -1 
+--       , offset-y = 1%
+       , lowerOnStart = True
+       , pickBroadest = False
+       , persistent = True
+       , hideOnStart = False
+       , iconRoot = ".config/xmobar/xpm-status-icons/icons"
+       , allDesktops = True
+       , overrideRedirect = True
+       , commands = [ Run  WeatherX "VABB"
+                                 [ ("clear", "🌤")
+                                 , ("sunny", "🌤")
+                                 , ("mostly clear", "🌤")
+                                 , ("mostly sunny", "🌤")
+                                 , ("partly sunny", "⛅")
+                                 , ("fair", "🌑")
+                                 , ("cloudy","☁")
+                                 , ("overcast","☁")
+                                 , ("partly cloudy", "⛅")
+                                 , ("mostly cloudy", "🌧")
+                                 , ("considerable cloudiness", "⛈")]
+                                   ["-t", "<fn=2><skyConditionS></fn> <tempC>°"
+                                 , "-L","10", "-H", "25", "--normal", "black"
+                                 , "--high", "lightgoldenrod4", "--low", "darkseagreen4"]
+                                 36000
+                    -- For iconss
+                    , Run Com "/home/hp77/.config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 10
+                    , Run Network "eth0" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    , Run Network "eth1" ["-L","0","-H","32",
+                                          "--normal","green","--high","red"] 10
+                    -- For Network Speed
+                    , Run DynNetwork     [ "--template" , ": <fn=1>\xf063 </fn><rx>", "-S", "True" 
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "red"
+                             , "--normal"   , "orange"
+                             , "--high"     , "green"
+                             ] 10
+                    -- For CPU Temp
+                    , Run CoreTemp       [ "--template" , "<core0>°C"
+                             , "--Low"      , "70"        -- units: °C
+                             , "--High"     , "80"        -- units: °C
+                             , "--low"      , "green"
+                             , "--normal"   , "orange"
+                             , "--high"     , "red"
+                             ] 10
+                    , Run Com "/home/hp77/.config/xmobar/scripts/battery" [] "battery" 10
+                    , Run Cpu ["--template", "<total>%",
+
+                               "-L","3","-H","50",
+                               "--normal","green","--high","red" ] 9 
+                    , Run Memory ["-t","<usedratio>%"] 10
+                    , Run Swap ["-t", "<usedratio>%"] 10
+                    , Run UnsafeStdinReader
+                    , Run Com "whoami" [] "username" 10
+                    -- I removed year which was %Y and also second which was %S
+                    , Run Date "%a %b %d %H:%M" "date" 10
+                   --Gives out Name of the internet, Not using now 
+                    , Run Com "/home/hp77/.config/xmobar/scripts/internet" [] "internet" 10
+                    , Run Com "/home/hp77/.config/xmobar/scripts/cpu" [] "cpu2" 10
+                    , Run Com "/home/hp77/.config/xmobar/scripts/memory" [] "mem" 10
+                    , Run Com "/home/hp77/.config/xmobar/scripts/updates" [] "updates" 10
+                    ]
+       , sepChar = "%"
+       , alignSep = "}{"
+       , template = "<icon=hp.xpm/> <fc=#ff6ac1>%UnsafeStdinReader%</fc>"
+
+      } 

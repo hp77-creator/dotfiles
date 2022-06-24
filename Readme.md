@@ -1,5 +1,17 @@
 Dotfiles that I use for my system.
 
+| :exclamation: Update |
+|----------------------|
+I have recently done a lot of modification in my configs, beginning from being able to open some apps in their workspaces to multiple xmobars on same monitor.
+1. Multiple xmobar in same monitor needs hacks like configuring it according to your window(so copy it at your own risk), I will upload them in separate files(ex: xmobarrc1, xmobarrc2, xmobarrc3) and also corresponding xmonad config as xmonad-multi.hs
+2. I have also added an icon in xmobar which is a xpm file
+3. I have also added box type style to all the components in xmobar(inspired by DT's config, link [here](https://gitlab.com/dwt1))
+
+| :zap: Current |
+|---------------|
+![](images/xmonad-multi-xmobar.png)
+
+
 <details>
 <summary><strong>Backstory</strong></summary>
 I fell in love with Vim and type of speed that it provides me and also the independence from the mouse.
