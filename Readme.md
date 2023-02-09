@@ -2,6 +2,17 @@ Dotfiles that I use for my system.
 
 | :exclamation: Update |
 |----------------------|
+
+> Date: 9 Feb 2023
+
+1. Added customization to grub bootloader theme, lightdm
+2. Made booting fast by using `systemd-analyze blame` and removing service which are not necessary
+3. configured vim to nvim, used @madrix01's config files for that
+4. updated my shell to `zsh` and using `oh-my-zsh` with `p10k` configuration
+
+
+
+> Date: 24 June 2022 
 I have recently done a lot of modification in my configs, beginning from being able to open some apps in their workspaces to multiple xmobars on same monitor.
 1. Multiple xmobar in same monitor needs hacks like configuring it according to your window(so copy it at your own risk), I will upload them in separate files(ex: xmobarrc1, xmobarrc2, xmobarrc3) and also corresponding xmonad config as xmonad-multi.hs
 2. I have also added an icon in xmobar which is a xpm file
@@ -149,6 +160,18 @@ PATH=/usr/bin
 ```
 
 [source of this info](https://abhixec.com/posts/xmonadandandroidstudio.html)
+
+- grub
+
+[Link](https://www.youtube.com/watch?v=a9o5DFOxQIU)
+Above link is a good guide on how to do modifications to grub, lightdm and plymouth.
+To know more about [Plymouth](https://wiki.debian.org/plymouth).
+
+after making a change in grub file, don't forget to do
+```bash
+sudo update-grub
+```
+
 
 ### Links
 
