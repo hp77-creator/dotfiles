@@ -1,0 +1,6 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Neovim — don't track installed plugins or compiled parsers
+nvim/.config/nvim/.git
