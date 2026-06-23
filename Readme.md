@@ -3,7 +3,46 @@ Dotfiles that I use for my system.
 | :exclamation: Update |
 |----------------------|
 
-> Date: 9 Feb 2023
+> Date: 23rd June 2026
+
+I joined hands with Apple device now, It's been more than 3 years now, I have set up configs for vim and tmux on my system.
+In 3 years lot has changed, World has shifted to AI driven development, companies are accepting AI in their SDLC and creating
+AIDLC, so naturally I took its help to create a config for my development. In MacOS, I am not shifting to any window managers
+but I am definitely switching to nvim and tmux. I have also used GNU stow to manage my dotfiles, you can follow below steps to
+set it up for your system as well.
+
+## Fresh machine setup
+```bash
+# 1. Clone
+git clone https://github.com/hp77-creator/dotfiles.git ~/dotfiles
+cd ~/dotfiles
+# 2. Run bootstrap (installs tools + creates symlinks)
+bash bootstrap.sh
+# 3. Open tmux → install plugins
+tmux
+# Press Ctrl+a then I
+# 4. Open nvim → plugins auto-install
+nvim
+# Run :TSUpdate   → compile treesitter parsers
+# Run :Mason      → install LSP servers
+```
+## Manual stow (if you don't want bootstrap.sh)
+```bash
+cd ~/dotfiles
+stow nvim   # symlinks ~/.config/nvim
+stow tmux   # symlinks ~/.tmux.conf
+```
+## Prerequisites
+- Neovim >= 0.11
+- tmux >= 3.0
+- Git
+- [GNU Stow](https://www.gnu.org/software/stow/)
+- A [Nerd Font](https://www.nerdfonts.com/) set in your terminal (for icons)
+  - Recommended: JetBrainsMono Nerd Font
+  - macOS: `brew install --cask font-jetbrains-mono-nerd-font`
+
+
+> Date: 9th Feb 2023
 
 1. Added customization to grub bootloader theme, lightdm
 2. Made booting fast by using `systemd-analyze blame` and removing service which are not necessary
@@ -12,7 +51,7 @@ Dotfiles that I use for my system.
 
 
 
-> Date: 24 June 2022 
+> Date: 24th June 2022 
 I have recently done a lot of modification in my configs, beginning from being able to open some apps in their workspaces to multiple xmobars on same monitor.
 1. Multiple xmobar in same monitor needs hacks like configuring it according to your window(so copy it at your own risk), I will upload them in separate files(ex: xmobarrc1, xmobarrc2, xmobarrc3) and also corresponding xmonad config as xmonad-multi.hs
 2. I have also added an icon in xmobar which is a xpm file
